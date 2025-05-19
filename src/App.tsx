@@ -5,6 +5,7 @@ import Markets from "./components/pages/Markets"
 import Harvests from "./components/pages/Harvests"
 import Weather from "./components/pages/Weather"
 import About from "./components/pages/About"
+import SignUp from "./components/pages/SignUp"
 
 function App() {  
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/markets" element={<Markets/>}/>
         <Route path="/harvests" element={<Harvests/>}/>
         <Route path="/weather" element={<Weather/>}/>
+        <Route path="/sign-up" element={<SignUp/>}/>
       </Routes>
     
     </>

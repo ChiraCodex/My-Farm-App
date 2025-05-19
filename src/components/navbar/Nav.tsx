@@ -9,7 +9,7 @@ function Nav() {
           <Link to={'/about-us'}>Who we Are</Link>
         </li>
         <li className="hover:bg-springBeige hover:text-jungleGreen rounded-xl px-1 cursor-pointer">What we Do</li>
-        <li className="hover:bg-springBeige hover:text-jungleGreen rounded-xl px-1 cursor-pointer">Get Started</li>
+        <li className="hover:bg-springBeige hover:text-jungleGreen rounded-xl px-1 cursor-pointer"><Link to={'/sign-up'}>Get Started</Link></li>
       </ul>
     </div>
   )
