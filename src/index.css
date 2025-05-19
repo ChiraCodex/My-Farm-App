@@ -1,8 +1,27 @@
-@talwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: chitos;
+  font-weight: 900;
+  src: url(../public/fonts/Chitos_Demo.ttf) format(truetype);
+}
+@font-face {
+  font-family: humbled;
+  src: url(../public/fonts/Humbled.otf) format(opentype);
+}
 
-body{
-    font-family: 'Poppins', sans-serif;
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 4px;
+  padding: 4px;
+  font-family: "Poppins", "sans-serif";
+  background-color: #1a3124;
+  color: rgb(255, 255, 255);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }

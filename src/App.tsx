@@ -1,32 +1,26 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './index.css'
-import About from './pages/about us/About'
-import Footer from './pages/Footer'
-import Home from './pages/home/Home'
-import Navbar from './pages/Navbar'
-import Features from "./pages/features/Features";
-import Projects from "./pages/projects/Projects";
+import {Route, Routes } from "react-router-dom"
+import Navbar from "./components/Navbar"
+import Home from "./components/pages/Home"
+import Markets from "./components/pages/Markets"
+import Harvests from "./components/pages/Harvests"
+import Weather from "./components/pages/Weather"
+import About from "./components/pages/About"
 
 function App() {  
 
-  return (
-
-    
+  return (    
     <>
-      
-      <BrowserRouter>
-      <Navbar/>
+     <Navbar/> 
+     
+     
       <Routes>
-        <Route path='/' element={<Home/>} />
-        <Route path='/home' element={<Home/>} />
-        <Route path='/about' element={<About/>} />
-        <Route path='/features' element={<Features/>} />
-        <Route path='/projects' element={<Projects/>} />
-        </Routes>
-        <Footer/>
-        </BrowserRouter>
-      
-
+        <Route path="/" element={<Home/>}/>
+        <Route path="/about-us" element={<About/>}/>
+        <Route path="/markets" element={<Markets/>}/>
+        <Route path="/harvests" element={<Harvests/>}/>
+        <Route path="/weather" element={<Weather/>}/>
+      </Routes>
+    
     </>
   )
 }

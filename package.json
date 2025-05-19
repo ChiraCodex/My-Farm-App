@@ -1,5 +1,5 @@
 {
-  "name": "makuyu_ridge",
+  "name": "AgriTrack",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -21,7 +21,8 @@
     "react-router-dom": "^7.5.1",
     "react-slideshow-image": "^4.3.2",
     "router": "^2.2.0",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
