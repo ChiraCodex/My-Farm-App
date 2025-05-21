@@ -1,7 +1,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z, ZodType } from "zod";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react"; // Added for loading/error states
 
 type FormData = {
   firstName: string;
@@ -13,16 +16,28 @@ type FormData = {
 };
 
 function SignUp() {
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
   const schema: ZodType<FormData> = z
     .object({
-      firstName: z.string().min(2).max(30),
-      lastName: z.string().min(2).max(30),
-      email: z.string().email(),
+      firstName: z
+        .string()
+        .min(2, "First name must be at least 2 characters")
+        .max(30),
+      lastName: z
+        .string()
+        .min(2, "Last name must be at least 2 characters")
+        .max(30),
+      email: z.string().email("Please enter a valid email"),
       contacts: z
         .string()
-        .regex(/^\d{10,15}$/, "Invalid phone number"),
-      password: z.string().min(5).max(15),
-      confirmPassword: z.string().min(5).max(15),
+        .regex(/^\d{10,15}$/, "Invalid phone number (10-15 digits)"),
+      password: z
+        .string()
+        .min(5, "Password must be at least 5 characters")
+        .max(15),
+      confirmPassword: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
       message: "Passwords do not match",
@@ -33,32 +48,48 @@ function SignUp() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-  });
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const submitData = async (data: FormData) => {
     try {
-      const res = await axios.post("http://localhost:5000/sign-up", data); // adjust your API endpoint
-      console.log("User created:", res.data);
-      reset(); // Clear form
-    } catch (err) {
-      console.error("Error creating user", err);
+      const { confirmPassword, ...userData } = data;
+      const response = await axios.post(
+        "http://localhost:5000/api/Users",
+        userData,
+        {
+          timeout: 5000, // 5 second timeout
+        }
+      );
+      navigate("/login");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.code === "ERR_NETWORK") {
+          setError("Cannot connect to server. Please try again later.");
+        } else if (error.response) {
+          setError(error.response.data.message);
+        }
+      }
+      console.error("Registration error:", error);
     }
   };
-
   return (
     <div className="flex justify-center">
       <form
         onSubmit={handleSubmit(submitData)}
-        className="w-1/3 border-4 py-8 px-4 rounded-3xl"
+        className="w-1/3 justify-center border-4 py-8 px-4 rounded-3xl"
       >
-        <p className="text-right text-sm">Step 1 of 2</p>
         <h2 className="text-center text-2xl">Sign Up Form</h2>
         <p className="text-center text-xs mb-8">
-          Please fill in all details correctly
+          Please fill in All Details Correctly
         </p>
+
+        {/* Display general error message */}
+        {error && (
+          <div className="mb-4 p-2 text-xs text-[red] rounded text-center">
+            {error}
+          </div>
+        )}
+
         <div className="grid grid-cols-2 gap-8">
           {/* First Name */}
           <div className="flex flex-col">
@@ -84,7 +115,7 @@ function SignUp() {
               type="text"
             />
             {errors.lastName && (
-              <span className="text-red-500 text-xs">
+              <span className="text-[red] text-xs">
                 {errors.lastName.message}
               </span>
             )}
@@ -99,22 +130,20 @@ function SignUp() {
               type="email"
             />
             {errors.email && (
-              <span className="text-red-500 text-xs">
-                {errors.email.message}
-              </span>
+              <span className="text-[red] text-xs">{errors.email.message}</span>
             )}
           </div>
 
-          {/* Phone */}
+          {/* Phone Number */}
           <div className="flex flex-col">
-            <label>Phone Number</label>
+            <label>Enter Phone Number</label>
             <input
               {...register("contacts")}
               className="bg-springBeige text-black rounded-xl px-2 py-1"
               type="text"
             />
             {errors.contacts && (
-              <span className="text-red-500 text-xs">
+              <span className="text-[red] text-xs">
                 {errors.contacts.message}
               </span>
             )}
@@ -122,14 +151,14 @@ function SignUp() {
 
           {/* Password */}
           <div className="flex flex-col">
-            <label>Password</label>
+            <label>Create Password</label>
             <input
               {...register("password")}
               className="bg-springBeige text-black rounded-xl px-2 py-1"
               type="password"
             />
             {errors.password && (
-              <span className="text-red-500 text-xs">
+              <span className="text-[red] text-xs">
                 {errors.password.message}
               </span>
             )}
@@ -144,23 +173,25 @@ function SignUp() {
               type="password"
             />
             {errors.confirmPassword && (
-              <span className="text-red-500 text-xs">
+              <span className="text-[red] text-xs">
                 {errors.confirmPassword.message}
               </span>
             )}
           </div>
         </div>
 
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-16">
           <button
             type="submit"
-            className="bg-someBrown px-4 py-2 rounded-xl text-lg font-semibold"
-          >
-            Create Account
-          </button>
+            className="bg-someBrown px-2 py-1 rounded-xl text-lg font-semibold"
+          >Sign Up</button>
         </div>
+
         <p className="text-center text-sm mt-10">
-          Already have an account?
+          Already Have Account?{" "}
+          <Link  to="/login" className=" text-neonGreen hover:underline">
+            Login
+          </Link>
         </p>
       </form>
     </div>
