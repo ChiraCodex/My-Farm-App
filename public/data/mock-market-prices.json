@@ -1,0 +1,42 @@
+[
+  {
+    "commodity": "Dry Maize (White)",
+    "market": "Kangeta",
+    "wholesale_price": 50.0,
+    "retail_price": 60.0,
+    "unit": "kg",
+    "date": "20/05/2025"
+  },
+  {
+    "commodity": "Beans",
+    "market": "Gikomba",
+    "wholesale_price": 100.0,
+    "retail_price": 120.0,
+    "unit": "kg",
+    "date": "20/05/2025"
+  },
+  {
+    "commodity": "Tomatoes",
+    "market": "Wakulima",
+    "wholesale_price": 80.0,
+    "retail_price": 100.0,
+    "unit": "kg",
+    "date": "20/05/2025"
+  },
+  {
+    "commodity": "Irish Potatoes",
+    "market": "Kangeta",
+    "wholesale_price": 60.0,
+    "retail_price": 75.0,
+    "unit": "kg",
+    "date": "20/05/2025"
+  },
+  {
+    "commodity": "Cabbage",
+    "market": "Meru",
+    "wholesale_price": 25.0,
+    "retail_price": 35.0,
+    "unit": "piece",
+    "date": "20/05/2025"
+  }
+]
