@@ -1,7 +1,7 @@
-import express, { json } from "express";
+import express from "express";
 import cors from "cors";
 import { config } from "dotenv";
-import connection from "./db.js"; // Use import instead of require
+import connection from "./db.js"; 
 import usersRoutes from './routes/userRoutes.js'
 import authRoutes from './routes/auth.js'
 
@@ -13,12 +13,13 @@ const app = express();
 connection();
 
 // Middleware
-app.use(cors());
-app.use(json());
+app.use(cors({ origin: "http://localhost:5173" }));
+
+app.use(express.json());
 
 //routes
-app.use("/api/users", usersRoutes);
-app.use("/api/auth", authRoutes);
+app.use("/api/", usersRoutes);
+app.use("/api/", authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
